@@ -32,5 +32,20 @@ result <- ode(y, times,hazards, paras)
 result1 <- as.data.frame(result)
 print(result1)
 
-result2 <- ggplot2(data = result)
-result1 <- result + geom_line(aes(x = time, y = I), color = "blue")
+# plot for the model
+
+result2 <- ggplot(data = result)
+result2 <- result2 + geom_line(aes(x = time, y = I), col = "blue")
+result2 <- result2 + geom_line(aes(x = time, y = R), col = "red")
+result2 <- result2 + geom_line(aes(x = time, y = M), col = "green")
+result2
+
+#proportion of initially infected that died before recovering
+
+(result1$M[result1$time == 28]/((result1$M[result1$time == 28]) +(result1$I[result1$time == 28]) + (result1$R[result1$time == 28]))) * 100
+
+#now use the competing hazards formula given in the video lecture to calculate the case fatality rate
+
+case_fatality_rate <- (0.2/(0.2 + 0.1)) * 100
+case_fatality_rate
+
