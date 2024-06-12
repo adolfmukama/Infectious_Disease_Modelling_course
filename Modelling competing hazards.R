@@ -34,11 +34,18 @@ print(result1)
 
 # plot for the model
 
-result2 <- ggplot(data = result)
-result2 <- result2 + geom_line(aes(x = time, y = I), col = "blue")
-result2 <- result2 + geom_line(aes(x = time, y = R), col = "red")
-result2 <- result2 + geom_line(aes(x = time, y = M), col = "green")
-result2
+output_long <- melt(as.data.frame(result1), id = "time") 
+output_long
+
+ggplot(data = output_long,   # specify object containing data to plot
+       aes(x = time, 
+           y = value, 
+           colour = variable, 
+           group = variable)) +       # assign columns to axes and groups
+  geom_line() +                       # represent data as lines
+  xlab("Time (days)")+                # add label for x axis
+  ylab("Number of people") +          # add label for y axis
+  labs(colour = "Compartment")        # add legend title
 
 #proportion of initially infected that died before recovering
 
@@ -48,4 +55,5 @@ result2
 
 case_fatality_rate <- (0.2/(0.2 + 0.1)) * 100
 case_fatality_rate
+
 
